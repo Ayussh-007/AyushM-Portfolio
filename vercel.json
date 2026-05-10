@@ -1,0 +1,10 @@
+{
+  "github": {
+    "silent": true
+  },
+  "buildCommand": "npm run build",
+  "installCommand": "npm install --legacy-peer-deps",
+  "framework": "nextjs",
+  "regions": ["cle1"],
+  "cleanUrls": true
+}

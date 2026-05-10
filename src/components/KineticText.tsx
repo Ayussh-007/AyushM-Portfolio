@@ -14,7 +14,7 @@ export const KineticText = memo(({ text, className = "", delay = 0, stagger = 0.
   const characters = text.split("");
 
   return (
-    <span className={`inline-block ${className}`}>
+    <span className="inline-block overflow-visible">
       {characters.map((char, i) => (
         <motion.span
           key={i}
@@ -24,9 +24,9 @@ export const KineticText = memo(({ text, className = "", delay = 0, stagger = 0.
           transition={{
             duration: 0.8,
             delay: delay + i * stagger,
-            ease: [0.16, 1, 0.3, 1], // Luxury cinematic easing
+            ease: [0.16, 1, 0.3, 1],
           }}
-          className="inline-block"
+          className={`inline-block ${className}`}
           style={{ whiteSpace: char === " " ? "pre" : "normal" }}
         >
           {char}

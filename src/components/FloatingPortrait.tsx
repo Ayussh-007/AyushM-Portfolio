@@ -3,6 +3,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useEffect, useState, memo, useRef } from "react";
+import Image from "next/image";
 
 export const FloatingPortrait = memo(() => {
   const { theme, resolvedTheme } = useTheme();
@@ -68,23 +69,32 @@ export const FloatingPortrait = memo(() => {
         className="relative h-[65vh] md:h-[85vh] w-full max-w-5xl"
       >
         <div 
-          className="absolute bottom-[-5%] left-1/2 h-24 w-[80%] -translate-x-1/2 rounded-[100%] bg-black/[0.1] blur-[60px] dark:bg-accent-cyan/5 z-0" 
+          className="absolute bottom-[-5%] left-1/2 h-24 w-[70%] -translate-x-1/2 rounded-[100%] bg-black/[0.1] blur-[60px] dark:bg-accent-cyan/5 z-0" 
           style={{ transform: "translateZ(0)" }}
         />
         
         <div className="relative h-full w-full flex items-end justify-center pointer-events-none px-4">
-             <motion.img
+          {/* Using Next.js Image for Automatic WebP conversion and optimization */}
+          <div className="relative h-full w-full flex items-end justify-center">
+             <motion.div
                 key={currentTheme === "dark" ? "dark-img" : "light-img"}
-                initial={{ opacity: 0, scale: 1.1 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                src={currentTheme === "dark" ? "/images/hero/ayush-dark.png" : "/images/hero/ayush-light.png"}
-                alt="Ayush Mhatre"
-                className="h-full w-auto object-contain object-bottom relative z-10"
-                loading="eager"
-                decoding="async"
-              />
+                transition={{ duration: 0.5 }}
+                className="relative h-full w-full"
+              >
+                <Image
+                  src={currentTheme === "dark" ? "/images/hero/ayush-dark.png" : "/images/hero/ayush-light.png"}
+                  alt="Ayush Mhatre"
+                  fill
+                  priority // Critical for LCP
+                  sizes="(max-width: 768px) 100vw, 1200px"
+                  className="object-contain object-bottom relative z-10"
+                  quality={90}
+                />
+              </motion.div>
+          </div>
         </div>
       </motion.div>
     </div>

@@ -4,11 +4,12 @@ import { useEffect, useState, memo } from "react";
 import { motion, useSpring, useMotionValue, useTransform, AnimatePresence } from "framer-motion";
 
 export const CustomCursor = memo(() => {
-  const [cursorState, setCursorState] = useState<"default" | "hover" | "action">("default");
+  const [cursorState, setCursorState] = useState<"default" | "hover" | "action" | "hidden">("default");
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
-  const springConfig = { damping: 30, stiffness: 800, mass: 0.5 };
+  // High-performance spring physics
+  const springConfig = { damping: 35, stiffness: 600, mass: 0.6 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
@@ -20,7 +21,13 @@ export const CustomCursor = memo(() => {
     let lastY = 0;
 
     const moveCursor = (e: MouseEvent) => {
-      if (document.body.classList.contains('is-scrolling')) return;
+      // Logic for hiding cursor when it leaves the window
+      if (e.clientX <= 0 || e.clientY <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
+        setCursorState("hidden");
+      } else {
+        if (cursorState === "hidden") setCursorState("default");
+      }
+
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
 
@@ -34,9 +41,9 @@ export const CustomCursor = memo(() => {
 
     const handleHover = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (target.closest(".magnetic-target")) {
+      if (target.closest(".magnetic-target") || target.closest("button") || target.closest("a")) {
         setCursorState("action");
-      } else if (target.tagName === "BUTTON" || target.tagName === "A") {
+      } else if (target.closest(".glass")) {
         setCursorState("hover");
       } else {
         setCursorState("default");
@@ -50,42 +57,60 @@ export const CustomCursor = memo(() => {
       window.removeEventListener("mousemove", moveCursor);
       window.removeEventListener("mouseover", handleHover);
     };
-  }, [cursorX, cursorY, velocityX, velocityY]);
+  }, [cursorX, cursorY, velocityX, velocityY, cursorState]);
 
-  const scaleX = useTransform(velocityX, [-100, 100], [1.5, 0.5]);
-  const scaleY = useTransform(velocityY, [-100, 100], [0.5, 1.5]);
+  // Velocity-based stretching logic
+  const scaleX = useTransform(velocityX, [-120, 120], [1.8, 0.4]);
+  const scaleY = useTransform(velocityY, [-120, 120], [0.4, 1.8]);
+  const rotate = useTransform(velocityX, [-120, 120], [-25, 25]);
 
   return (
     <motion.div
-      className="pointer-events-none fixed left-0 top-0 z-[9999] hidden md:block mix-blend-difference"
+      className="pointer-events-none fixed left-0 top-0 z-[9999] hidden md:block"
       style={{
         translateX: cursorXSpring,
         translateY: cursorYSpring,
-        willChange: "transform",
+        opacity: cursorState === "hidden" ? 0 : 1,
+        willChange: "transform, opacity",
       }}
     >
+      {/* 🔮 MAIN BLOB */}
       <motion.div
         animate={{
-          scale: cursorState === "action" ? 0 : cursorState === "hover" ? 2.5 : 1,
-          opacity: cursorState === "action" ? 0 : 1
+          scale: cursorState === "action" ? 0.3 : cursorState === "hover" ? 2 : 1,
+          backgroundColor: cursorState === "action" ? "#FFFFFF" : "#22D3EE",
         }}
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
-        className="flex h-6 w-6 items-center justify-center rounded-full bg-accent-cyan"
+        className="flex h-6 w-6 items-center justify-center rounded-full mix-blend-difference"
         style={{
           scaleX: cursorState === "default" ? scaleX : 1,
           scaleY: cursorState === "default" ? scaleY : 1,
+          rotate: cursorState === "default" ? rotate : 0,
         }}
       >
-        <div className="h-1 w-1 rounded-full bg-black opacity-20" />
+        <div className="h-1 w-1 rounded-full bg-black opacity-30" />
       </motion.div>
       
-      {/* Action Ring for Magnetic Targets */}
+      {/* ☄️ TRAIL / RING */}
       <motion.div
         animate={{
-          scale: cursorState === "action" ? 3 : 0,
-          opacity: cursorState === "action" ? 0.5 : 0,
+          scale: cursorState === "action" ? 3.5 : 0,
+          opacity: cursorState === "action" ? 0.4 : 0,
+          borderWidth: cursorState === "action" ? "1.5px" : "0px",
         }}
-        className="absolute left-[-12px] top-[-12px] h-12 w-12 rounded-full border border-accent-cyan"
+        transition={{ type: "spring", stiffness: 300, damping: 25 }}
+        className="absolute left-[-12px] top-[-12px] h-12 w-12 rounded-full border-accent-cyan flex items-center justify-center"
+      >
+         <div className="w-1 h-1 bg-accent-cyan rounded-full animate-ping" />
+      </motion.div>
+
+      {/* 🌠 SOFT GLOW SUBSTRATE */}
+      <motion.div 
+        animate={{ 
+          opacity: cursorState === "hidden" ? 0 : 0.4,
+          scale: cursorState === "action" ? 2 : 1.5 
+        }}
+        className="absolute inset-0 -z-10 bg-accent-cyan/20 blur-xl rounded-full" 
       />
     </motion.div>
   );

@@ -86,105 +86,77 @@
   }
 }
 
-/* Optimized Glassmorphism - Lightweight Blurs */
+/* 💎 ELITE GLASSMORPHISM */
 .glass {
-  @apply backdrop-blur-md bg-white/40 border border-white/50 shadow-[0_4px_16px_0_rgba(31,38,135,0.05)];
-  will-change: backdrop-filter;
+  @apply backdrop-blur-xl bg-white/40 border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.04)];
+  will-change: backdrop-filter, transform;
   transform: translateZ(0);
 }
 
 .dark .glass {
-  @apply backdrop-blur-md bg-black/20 border border-white/10 shadow-none;
-  will-change: backdrop-filter;
-  transform: translateZ(0);
-}
-
-.neumorphic-card {
-  background: #FAFAFA;
-  box-shadow: 20px 20px 60px #d5d5d5, -20px -20px 60px #ffffff;
-  border-radius: 2rem;
-}
-
-.dark .neumorphic-card {
-  background: #0A0A0A;
-  box-shadow: 10px 10px 30px #050505, -10px -10px 30px #0f0f0f;
+  @apply backdrop-blur-xl bg-white/[0.03] border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)];
 }
 
 @layer utilities {
   .text-shadow-glow {
-    text-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
   }
   .dark .text-shadow-glow {
-    text-shadow: 0 0 50px rgba(34, 211, 238, 0.3), 0 0 100px rgba(34, 211, 238, 0.1);
+    text-shadow: 0 0 40px rgba(34, 211, 238, 0.25), 0 0 80px rgba(34, 211, 238, 0.1);
   }
 
-  /* PREMIUM METALLIC GRADIENT - High Contrast */
   .text-gradient-silver {
-    @apply bg-clip-text text-transparent bg-gradient-to-b from-white via-zinc-100 to-zinc-400;
+    @apply bg-clip-text text-transparent bg-gradient-to-b from-white via-zinc-100 to-zinc-500;
   }
 
-  /* LUXURY OUTLINE - High Visibility */
-  .text-outline-black {
-    -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.9);
-    color: transparent;
+  /* 💎 UNIFIED OUTLINE SYSTEM */
+  .text-outline-cinematic {
+    -webkit-text-stroke: 1.5px #000000;
+    color: transparent !important;
   }
 
-  .text-outline-white {
-    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.95);
-    color: transparent;
-  }
-
-  .dark .text-outline-white {
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
+  .dark .text-outline-cinematic {
+    -webkit-text-stroke: 1.5px #FFFFFF;
+    color: transparent !important;
     filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
   }
-  
-  /* CINEMATIC ATMOSPHERE UTILITIES */
+
+  /* 🌌 ATMOSPHERIC UTILITIES */
   .haze-overlay {
     background: radial-gradient(circle at 50% 50%, transparent 0%, var(--background) 100%);
     pointer-events: none;
   }
 }
 
+/* 🌀 ANIMATIONS */
 @keyframes pulse-soft {
   0%, 100% { opacity: 1; transform: scale(1) translateZ(0); }
-  50% { opacity: 0.5; transform: scale(1.05) translateZ(0); }
+  50% { opacity: 0.6; transform: scale(1.05) translateZ(0); }
 }
 
 .animate-pulse-soft {
-  animation: pulse-soft 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: pulse-soft 5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 15s linear infinite;
+}
+
+/* 🎥 FILM GRAIN */
 .noise-bg {
   position: fixed;
   inset: 0;
   z-index: -5;
-  opacity: 0.02; /* Extremely subtle film grain */
+  opacity: 0.02;
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  will-change: transform;
-  transform: translateZ(0);
 }
 
-/* Hardware accelerated scroll container */
-.scroll-gpu {
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* Optimization for active scrolling */
-.is-scrolling * {
-  pointer-events: none !important;
-}
-
-.is-scrolling .noise-bg,
-.is-scrolling [class*='blur-'] {
-  opacity: 0.1 !important;
-  transition: opacity 0.5s ease;
-}
-
-/* Hide scrollbar for a cleaner cinematic look */
 ::-webkit-scrollbar {
   display: none;
 }

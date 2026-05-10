@@ -14,24 +14,24 @@ export function Providers({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     setMounted(true);
     
-    // 1. High-Sync Lenis + GSAP Integration
+    // ⚔️ ULTRA-SYNC: Lenis + GSAP Master Loop
+    gsap.registerPlugin(ScrollTrigger);
+    
     function update(time: number) {
       lenisRef.current?.lenis?.raf(time * 1000);
     }
     
-    // 2. Disable lag smoothing
     gsap.ticker.lagSmoothing(0);
-    
-    // 3. Add Lenis to GSAP Ticker
     gsap.ticker.add(update);
     
-    // 4. Update ScrollTrigger and handle performance class
     const lenis = lenisRef.current?.lenis;
     let scrollTimeout: NodeJS.Timeout;
 
     if (lenis) {
       lenis.on('scroll', (e: any) => {
         ScrollTrigger.update();
+        
+        // 🚀 Dynamic Performance Toggling
         if (Math.abs(e.velocity) > 0.8) {
           document.body.classList.add('is-scrolling');
           clearTimeout(scrollTimeout);
@@ -56,11 +56,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
             root 
             ref={lenisRef}
             options={{ 
-              lerp: 0.1, 
+              lerp: 0.08, // Premium weighted inertia
               smoothWheel: true,
               syncTouch: true,
-              wheelMultiplier: 1.0,
-              touchMultiplier: 1.5,
+              wheelMultiplier: 0.9, // More intentional, less floaty
+              touchMultiplier: 1.8,
               infinite: false,
               gestureOrientation: "vertical",
             }}
@@ -68,7 +68,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
             {children as any}
           </ReactLenis>
         ) : (
-          <div style={{ visibility: 'hidden' }}>{children}</div>
+          <div className="bg-background fixed inset-0" />
         )}
       </ThemeTransitionProvider>
     </ThemeProvider>

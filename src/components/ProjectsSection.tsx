@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { memo, useRef, useState, useEffect } from "react";
+import { memo, useState } from "react";
 import { TiltCard } from "./TiltCard";
 import { MagneticButton } from "./MagneticButton";
 import { KineticText } from "./KineticText";
@@ -14,159 +14,112 @@ const GithubSVG = () => (
   </svg>
 );
 
-const ExternalLinkSVG = () => (
+const MusicSVG = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
-    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-    <polyline points="15 3 22 3 22 9" />
-    <line x1="10" y1="14" x2="22" y2="3" />
+    <path d="M9 18V5l12-2v13" />
+    <circle cx="6" cy="18" r="3" />
+    <circle cx="18" cy="16" r="3" />
   </svg>
 );
 
-const ActivitySVG = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
-    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+const GamepadSVG = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+    <line x1="6" y1="12" x2="10" y2="12" />
+    <line x1="8" y1="10" x2="8" y2="14" />
+    <rect x="15" y="13" width="3" height="3" rx="0.5" />
+    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8Z" />
   </svg>
 );
 
-const CpuSVG = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
-    <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
-    <rect x="9" y="9" width="6" height="6" />
-    <line x1="9" y1="1" x2="9" y2="4" />
-    <line x1="15" y1="1" x2="15" y2="4" />
-    <line x1="9" y1="20" x2="9" y2="23" />
-    <line x1="15" y1="20" x2="15" y2="23" />
-    <line x1="20" y1="9" x2="23" y2="9" />
-    <line x1="20" y1="15" x2="23" y2="15" />
-    <line x1="1" y1="9" x2="4" y2="9" />
-    <line x1="1" y1="15" x2="4" y2="15" />
+const ClockSVG = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+    <circle cx="12" cy="12" r="10" />
+    <polyline points="12 6 12 12 16 14" />
   </svg>
 );
 
-const CalendarSVG = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
-    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-    <line x1="16" y1="2" x2="16" y2="6" />
-    <line x1="8" y1="2" x2="8" y2="6" />
-    <line x1="3" y1="10" x2="21" y2="10" />
+const AtomSVG = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+    <circle cx="12" cy="12" r="1" />
+    <path d="M20.2 20.2c2.04-2.03.02-7.36-4.52-11.9s-9.87-6.56-11.9-4.52 0 7.36 4.52 11.9 9.87 6.56 11.9 4.52z" />
+    <path d="M3.8 3.8c-2.04 2.03-.02 7.36 4.52 11.9s9.87 6.56 11.9 4.52 0-7.36-4.52-11.9-9.87-6.56-11.9-4.52z" />
   </svg>
 );
 
-const LayoutSVG = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
-    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-    <line x1="3" y1="9" x2="21" y2="9" />
-    <line x1="9" y1="21" x2="9" y2="9" />
+const MicSVG = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+    <line x1="12" y1="19" x2="12" y2="22" />
   </svg>
-);
-
-const NAVABackground = () => (
-  <div className="absolute inset-0 z-0 opacity-20 overflow-hidden">
-    <div className="absolute inset-0 flex items-center justify-center gap-1">
-      {[...Array(20)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="w-1 bg-accent-cyan rounded-full"
-          animate={{ height: [20, 60, 20], opacity: [0.3, 1, 0.3] }}
-          transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.05, ease: "easeInOut" }}
-        />
-      ))}
-    </div>
-    <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
-  </div>
-);
-
-const NeuralBackground = () => (
-  <div className="absolute inset-0 z-0 opacity-20 overflow-hidden">
-    <svg className="h-full w-full">
-      <defs>
-        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-accent-blue/30" />
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#grid)" />
-      {[...Array(5)].map((_, i) => (
-        <motion.circle
-          key={i}
-          cx={`${20 + i * 15}%`}
-          cy={`${30 + (i % 2) * 40}%`}
-          r="2"
-          fill="var(--color-accent-blue)"
-          animate={{ opacity: [0.2, 1, 0.2], scale: [1, 1.5, 1] }}
-          transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
-        />
-      ))}
-    </svg>
-    <div className="absolute inset-0 bg-gradient-to-br from-transparent via-accent-blue/5 to-transparent" />
-  </div>
-);
-
-const PlannerBackground = () => (
-  <div className="absolute inset-0 z-0 opacity-10 overflow-hidden">
-    <div className="grid grid-cols-6 grid-rows-6 gap-1 p-10 h-full w-full">
-      {[...Array(36)].map((_, i) => (
-        <motion.div key={i} className="border border-white/20 rounded-sm" whileHover={{ backgroundColor: "rgba(34, 211, 238, 0.2)" }} />
-      ))}
-    </div>
-  </div>
-);
-
-const PortfolioBackground = () => (
-  <div className="absolute inset-0 z-0 opacity-20 overflow-hidden">
-    <motion.div
-      className="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-[radial-gradient(circle_at_center,var(--color-accent-cyan),transparent_50%)]"
-      animate={{ rotate: 360 }}
-      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-    />
-  </div>
 );
 
 const projects = [
-  { id: "nava", title: "N.A.V.A", tagline: "Neural Voice Assistant", description: "Advanced AI voice assistant using NLP and audio synthesis.", tech: ["Python", "TensorFlow", "React"], icon: <ActivitySVG />, background: <NAVABackground />, github: "#", live: "#" },
-  { id: "mtrx", title: "MTRX-TriAxis", tagline: "AI Coordinate Engine", description: "Coordinate processing for complex 3D spatial intelligence.", tech: ["C++", "CUDA", "Three.js"], icon: <CpuSVG />, background: <NeuralBackground />, github: "#", live: "#" },
-  { id: "planner", title: "Smart Study Planner", tagline: "Intelligent Productivity", description: "Predictive scheduling application using machine learning.", tech: ["Next.js", "ML.js", "Tailwind"], icon: <CalendarSVG />, background: <PlannerBackground />, github: "#", live: "#" },
-  { id: "portfolio", title: "Portfolio Website", tagline: "Cinematic Web Experience", description: "A fusion of Apple storytelling and Awwwards-winning design.", tech: ["React", "Next.js", "GSAP"], icon: <LayoutSVG />, background: <PortfolioBackground />, github: "#", live: "#" }
+  { 
+    id: "xolo", 
+    title: "XOLO", 
+    tagline: "Multimodal AI Music", 
+    description: "AI mobile app translating visual DNA of photos into unique musical compositions using OpenAI's CLIP model.", 
+    icon: <MusicSVG />, 
+    github: "https://github.com/Ayussh-007/XOLO" 
+  },
+  { 
+    id: "incursion", 
+    title: "INCURSION", 
+    tagline: "Sci-Fi Interactive", 
+    description: "Hyper-realistic cinematic game experience featuring WebGL Earth rendering and immersive spatial audio design.", 
+    icon: <GamepadSVG />, 
+    github: "https://github.com/Ayussh-007/Incursion" 
+  },
+  { 
+    id: "planner", 
+    title: "Student Planner", 
+    tagline: "Intelligent Productivity", 
+    description: "Smart desktop planner built with Java and SQLite that generates personalized, priority-based study schedules.", 
+    icon: <ClockSVG />, 
+    github: "https://github.com/Ayussh-007/StudentPlanner" 
+  },
+  { 
+    id: "qurie", 
+    title: "Qurie", 
+    tagline: "3D Physics Simulation", 
+    description: "Interactive platform for visualizing complex scientific concepts through immersive 3D simulations and explorations.", 
+    icon: <AtomSVG />, 
+    github: "https://github.com/Ayussh-007/Qurie" 
+  },
+  { 
+    id: "nava", 
+    title: "N.A.V.A", 
+    tagline: "AI Voice Assistant", 
+    description: "Digital assistant performing voice recognition, web searches, weather reporting, and automated task execution.", 
+    icon: <MicSVG />, 
+    github: "https://github.com/Manthan-Railkar/N.A.V.A" 
+  },
 ];
 
 const ProjectCard = memo(({ project }: { project: typeof projects[0] }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-
   return (
     <TiltCard className="h-full">
-      <div 
-        className="glass h-[450px] w-full relative overflow-hidden rounded-[2.5rem] flex flex-col group p-8"
-        onMouseEnter={() => setIsExpanded(true)}
-        onMouseLeave={() => setIsExpanded(false)}
-      >
-        {project.background}
-        <div className="relative z-10 flex flex-col h-full justify-between">
-          <div className="flex justify-between items-start">
-            <div className="flex flex-col gap-2">
-              <motion.div className="p-3 bg-white/5 rounded-2xl w-fit backdrop-blur-md border border-white/10" whileHover={{ scale: 1.1, rotate: 5 }}>
-                {project.icon}
-              </motion.div>
-              <span className="text-[10px] font-bold uppercase tracking-[0.4em] opacity-40 mt-2">ProjectUniverse</span>
+      <div className="glass h-full min-h-[340px] w-full relative overflow-hidden rounded-[2rem] flex flex-col p-8 group transition-all duration-500 hover:border-accent-cyan/20">
+        <div className="relative z-10 flex flex-col h-full">
+          <div className="flex justify-between items-start mb-6">
+            <div className="p-2.5 bg-white/5 rounded-lg border border-white/10 group-hover:bg-accent-cyan/10 transition-colors">
+              {project.icon}
+            </div>
+            <span className="text-[8px] font-black uppercase tracking-[0.4em] opacity-20">Project Node</span>
+          </div>
+
+          <div className="mt-auto">
+            <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tighter mb-1 group-hover:text-accent-cyan transition-colors">{project.title}</h3>
+            <p className="text-accent-cyan font-bold uppercase text-[8px] tracking-[0.2em] mb-4">{project.tagline}</p>
+            <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed mb-6 font-bold uppercase tracking-widest opacity-60">
+              {project.description}
+            </p>
+            <div className="flex gap-3">
+              <MagneticButton><a href={project.github} target="_blank" rel="noopener noreferrer" className="px-5 py-2 bg-black dark:bg-white text-white dark:text-black rounded-full text-[9px] font-black uppercase tracking-widest transition-transform hover:scale-105 active:scale-95 shadow-lg">GitHub</a></MagneticButton>
             </div>
           </div>
-          <div className="mt-auto">
-            <h3 className="text-4xl font-black uppercase tracking-tighter mb-2">{project.title}</h3>
-            <p className="text-accent-cyan font-bold uppercase text-[10px] tracking-widest mb-4">{project.tagline}</p>
-            <AnimatePresence>
-              {isExpanded && (
-                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.4, ease: "circOut" }} className="overflow-hidden">
-                  <p className="text-sm text-zinc-400 leading-relaxed mb-6 max-w-md">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-8">{project.tech.map(t => (<span key={t} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[9px] font-bold uppercase text-zinc-300">{t}</span>))}</div>
-                  <div className="flex gap-4">
-                    <MagneticButton><a href={project.github} className="flex items-center gap-2 px-6 py-3 bg-white text-black rounded-full text-[10px] font-black uppercase transition-transform hover:scale-105">GitHub</a></MagneticButton>
-                    <MagneticButton><a href={project.live} className="flex items-center gap-2 px-6 py-3 border border-white/20 rounded-full text-[10px] font-black uppercase transition-all hover:bg-white/5">Preview</a></MagneticButton>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-            {!isExpanded && (<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-4 mt-2"><span className="text-[10px] font-bold opacity-30 uppercase tracking-widest flex items-center gap-2">Hover to expand <motion.span animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>→</motion.span></span></motion.div>)}
-          </div>
         </div>
-        <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-accent-cyan/10 blur-[100px] rounded-full group-hover:bg-accent-cyan/20 transition-colors duration-700" />
       </div>
     </TiltCard>
   );
@@ -175,20 +128,22 @@ ProjectCard.displayName = "ProjectCard";
 
 export const ProjectsSection = memo(() => {
   return (
-    <section id="works" className="relative z-10 px-6 py-40 bg-background/50 backdrop-blur-sm overflow-hidden scroll-gpu">
-      <div className="container mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-          <h2 className="text-6xl md:text-[10rem] font-black uppercase tracking-tighter leading-none">
-            <KineticText text="Selected" className="block" />
-            <KineticText text="Works" className="block text-accent-blue" delay={0.2} />
-          </h2>
-          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-zinc-500 max-w-xs text-sm leading-relaxed mb-6">
-            A collection of intelligent systems and creative interfaces crafted at the intersection of AI and Web.
-          </motion.p>
+    <section id="works" className="relative z-10 px-6 py-20 bg-background overflow-hidden border-t border-white/5">
+      <div className="container mx-auto max-w-5xl">
+        <div className="flex flex-col md:flex-row justify-between items-start mb-12 gap-8">
+          <div>
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-tight">
+              <KineticText text="Selected" className="block" />
+              <KineticText text="Works" className="block text-accent-cyan" delay={0.1} />
+            </h2>
+          </div>
+          <p className="text-[10px] md:text-xs text-zinc-500 max-w-sm leading-relaxed uppercase tracking-widest font-bold opacity-40 md:mt-1 border-l-2 border-accent-blue/10 pl-5">
+            Intelligent systems and cinematic interfaces built at the boundary of ML and web architecture.
+          </p>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, i) => (
-            <motion.div key={project.id} initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.8, ease: "circOut" }}>
+            <motion.div key={project.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
               <ProjectCard project={project} />
             </motion.div>
           ))}
